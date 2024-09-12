@@ -18,6 +18,7 @@ public:
     void calibrationRoutine();
     void pidControl();
     void followLine();
+    void debug();
    
 private:
 
@@ -25,9 +26,9 @@ private:
     Motor &_rightMotor, &_leftMotor;
     QTRSensors _qtrSensor;
 
-    float _kP{0.0f}, _kI{0.0f}, _kD{0.0f};      // PID coefficients with default values
+    float _kP{0.045f}, _kI{0.0f}, _kD{0.38f};      // PID coefficients with default values
     int _lastError{0};                          // Last error value with default value
-    int _baseSpeed{0};                          // Base speed for the motors with default value
+    int _baseSpeed{150};
     int _maxSpeed{255};                         // Maximum speed for the motors with default value
 
 };

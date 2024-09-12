@@ -3,6 +3,7 @@
 
 void LineFollower::init(const uint8_t sensorPins[], const int emmiterPin) {
     
+    Serial.begin(9600);
     _rightMotor.init();
     _leftMotor.init();
     _qtrSensor.setTypeAnalog();
@@ -27,9 +28,9 @@ void LineFollower::calibrationRoutine() {
 }
 
 void LineFollower::pidControl() {
-
+    
     uint16_t position = _qtrSensor.readLineBlack(_sensorArray);
-    int error = 3500 - position;
+    int error = position - 3800;
 
     _kP = error;
     _kI = _kI + error;
@@ -49,6 +50,21 @@ void LineFollower::pidControl() {
 
     _leftMotor.setDirection(true);
     _rightMotor.setDirection(true);
+
+}
+
+void LineFollower::debug() {
+
+    uint16_t position = _qtrSensor.readLineBlack(_sensorArray);
+
+     for (uint8_t i = 0; i < SENSOR_NUM; i++) {
+        Serial.print(_sensorArray[i]);
+        Serial.print('\t');
+    }
+
+    Serial.println(position);
+
+    delay(1000);
 
 }
 

@@ -10,17 +10,14 @@ LineFollower lineFollower(rightMotor, leftMotor);
 
 void setup() {
 
-  //lineFollower.init(sensorPins, emitterPin);
-  //lineFollower.calibrationRoutine();
+  lineFollower.init(sensorPins, emitterPin);
+  lineFollower.calibrationRoutine();
 
 }
 
 void loop() {
 
-  //lineFollower.followLine();
-  rightMotor.setSpeed(100);
-  rightMotor.setDirection(true);
-  leftMotor.setSpeed(90);  
-  leftMotor.setDirection(true);
+  // lineFollower.followLine();
+  lineFollower.debug();
   
 }
