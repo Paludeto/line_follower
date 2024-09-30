@@ -23,6 +23,8 @@ public:
     // Set the speed of the motor (0-255)
     void setSpeed(int speed);
 
+    int getSpeed();
+
     // Set the direction of the motor
     void setDirection(bool forward);
 

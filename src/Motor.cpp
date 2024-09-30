@@ -1,9 +1,22 @@
 #include <Motor.hh>
 
 void Motor::setSpeed(int speed) {
+    
+    _speed = constrain(speed, -255, 255);
 
-    _speed = constrain(speed, 0, 255);
+    if (speed < 0) {
+        setDirection(false);
+    } else {
+        setDirection(true);
+    }
+
     applyState();
+
+}
+
+int Motor::getSpeed() {
+
+    return _speed;
 
 }
 
@@ -31,7 +44,7 @@ void Motor::applyState() {
         digitalWrite(_dirPin2, LOW);
     } else {
         digitalWrite(_dirPin1, LOW);
-        analogWrite(_dirPin2, _speed);
+        analogWrite(_dirPin2, -_speed);
     }
 
 }

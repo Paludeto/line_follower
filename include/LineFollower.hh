@@ -4,7 +4,7 @@
 #include <Motor.hh>
 #include <QTRSensors.h>
 
-#define SENSOR_NUM 8
+#define SENSOR_NUM 6
 
 class LineFollower {
 public: 
@@ -15,10 +15,16 @@ public:
     };
 
     void init(const uint8_t sensorPins[], const int emmiterPin);
+
     void calibrationRoutine();
+
     void pidControl();
+
     void followLine();
+
     void debug();
+
+    void calibrateMotors();
    
 private:
 
@@ -26,10 +32,11 @@ private:
     Motor &_rightMotor, &_leftMotor;
     QTRSensors _qtrSensor;
 
-    float _kP{0.045f}, _kI{0.0f}, _kD{0.38f};      // PID coefficients with default values
+    float _kP{0.05f}, _kI{0.0001f}, _kD{0.5f};      // PID coefficients with default value
     int _lastError{0};                          // Last error value with default value
-    int _baseSpeed{150};
+    int _baseSpeed{200};
     int _maxSpeed{255};                         // Maximum speed for the motors with default value
+    int _P, _I, _D;
 
 };
 

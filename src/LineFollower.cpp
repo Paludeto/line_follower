@@ -23,6 +23,18 @@ void LineFollower::calibrationRoutine() {
         _qtrSensor.calibrate();
     }
 
+    for (uint8_t i = 0; i < SENSOR_NUM; i++) {
+        Serial.print(_qtrSensor.calibrationOn.minimum[i]);
+        Serial.print(' ');
+    }
+    Serial.println();
+
+    // print the calibration maximum values measured when emitters were on
+    for (uint8_t i = 0; i < SENSOR_NUM; i++) {
+        Serial.print(_qtrSensor.calibrationOn.maximum[i]);
+        Serial.print(' ');
+    }
+
     digitalWrite(LED_BUILTIN, LOW);
 
 }
@@ -30,17 +42,18 @@ void LineFollower::calibrationRoutine() {
 void LineFollower::pidControl() {
     
     uint16_t position = _qtrSensor.readLineBlack(_sensorArray);
-    int error = position - 3800;
 
-    _kP = error;
-    _kI = _kI + error;
-    _kD = error - _lastError;
+    int error = position - 2500;
+
+    _P = error;
+    _I += error;
+    _D = error - _lastError;
     _lastError = error;
 
-    int pidOutput = static_cast<int>(_kP + _kD + _kI);
+    int pidOutput = static_cast<int>(_kP * _P + _kD * _D + _kI * _I);
 
-    int motorSpeed1 = _baseSpeed + pidOutput;
-    int motorSpeed2 = _baseSpeed - pidOutput;
+    int motorSpeed1 = _baseSpeed - pidOutput;
+    int motorSpeed2 = _baseSpeed + pidOutput;
 
     motorSpeed1 = constrain(motorSpeed1, 0, _maxSpeed);
     motorSpeed2 = constrain(motorSpeed2, 0, _maxSpeed);
@@ -48,16 +61,19 @@ void LineFollower::pidControl() {
     _leftMotor.setSpeed(motorSpeed1);
     _rightMotor.setSpeed(motorSpeed2);
 
-    _leftMotor.setDirection(true);
-    _rightMotor.setDirection(true);
-
+    Serial.print("Position: "); Serial.print(position);
+    Serial.print(" Error: "); Serial.print(error);
+    Serial.print(" PID Output: "); Serial.print(pidOutput);
+    Serial.print(" Left Speed: "); Serial.print(_leftMotor.getSpeed());
+    Serial.print(" Right Speed: "); Serial.println(_rightMotor.getSpeed());
+    
 }
 
 void LineFollower::debug() {
 
     uint16_t position = _qtrSensor.readLineBlack(_sensorArray);
 
-     for (uint8_t i = 0; i < SENSOR_NUM; i++) {
+    for (uint8_t i = 0; i < SENSOR_NUM; i++) {
         Serial.print(_sensorArray[i]);
         Serial.print('\t');
     }
