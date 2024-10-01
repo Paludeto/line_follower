@@ -8,7 +8,7 @@ Para compilar e carregar este projeto, você precisará:
 
 - [PlatformIO Core](https://platformio.org/install) instalado na sua máquina.
 - Um microcontrolador compatível (por exemplo, Arduino ou qualquer outro suportado pelo PlatformIO).
-- As dependências necessárias (por exemplo, bibliotecas Motor e QTR Sensor), que são gerenciadas pelo PlatformIO.
+- As dependências necessárias (por exemplo QTR Sensor), que são gerenciadas pelo PlatformIO.
 
 ## Instruções de Compilação
 
