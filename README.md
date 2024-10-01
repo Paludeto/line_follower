@@ -36,5 +36,5 @@ Siga os passos abaixo para compilar o projeto na sua máquina local:
 
 2. **Caso queira monitorar a saída serial do dispositivo, execute**:
 
-  ```bash
+   ```bash
    pio device monitor
