@@ -18,7 +18,7 @@ Siga os passos abaixo para compilar o projeto na sua máquina local:
 
    ```bash
    git clone https://github.com/seu-repositorio/line-follower.git
-   cd line-follower
+   cd line_follower
 
 2. **Abra o terminal no diretório do projeto**.
 
