@@ -29,12 +29,12 @@ Siga os passos abaixo para compilar o projeto na sua máquina local:
 
 ## Opcional
 
-**Para carregar o firmware compilado, use o seguinte comando**:
+1. **Para carregar o firmware compilado, use o seguinte comando**:
 
    ```bash
    pio run --target upload
 
-**Para monitorar os dados seriais, use este comando**:
+2. **Caso queira monitorar a saída serial do dispositivo, execute**:
 
   ```bash
    pio device monitor
