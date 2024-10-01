@@ -12,36 +12,39 @@ void LineFollower::init(const uint8_t sensorPins[], const int emmiterPin) {
 
 }
 
-// Ran inside of setup's scope
 void LineFollower::calibrationRoutine() {
 
     pinMode(LED_BUILTIN, OUTPUT);
 
     digitalWrite(LED_BUILTIN, HIGH);
 
+    // 0,1 ms por sensor * 4 amostras por leitura de sensor * 6 sensores
+    // * 10 leituras por chamada de calibrate() = ~24 ms por chamada de calibrate().
+    // Executada 400 vezes, leva cerca de 10 segundos.
     for (uint16_t i = 0; i < 400; i++) {
         _qtrSensor.calibrate();
     }
 
+    //Printa valores mínimos adquiridos durante a calibragem
     for (uint8_t i = 0; i < SENSOR_NUM; i++) {
         Serial.print(_qtrSensor.calibrationOn.minimum[i]);
         Serial.print(' ');
     }
     Serial.println();
 
-    // print the calibration maximum values measured when emitters were on
+    // Printa valores máximos adquiridos durante a calibragem
     for (uint8_t i = 0; i < SENSOR_NUM; i++) {
         Serial.print(_qtrSensor.calibrationOn.maximum[i]);
         Serial.print(' ');
     }
 
     digitalWrite(LED_BUILTIN, LOW);
-
+    
 }
 
 void LineFollower::pidControl() {
     
-    uint16_t position = _qtrSensor.readLineBlack(_sensorArray);
+    uint16_t position = _qtrSensor.readLineWhite(_sensorArray);
 
     int error = position - 2500;
 
@@ -71,7 +74,7 @@ void LineFollower::pidControl() {
 
 void LineFollower::debug() {
 
-    uint16_t position = _qtrSensor.readLineBlack(_sensorArray);
+    uint16_t position = _qtrSensor.readLineWhite(_sensorArray);
 
     for (uint8_t i = 0; i < SENSOR_NUM; i++) {
         Serial.print(_sensorArray[i]);

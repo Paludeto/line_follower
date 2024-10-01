@@ -18,6 +18,5 @@ void setup() {
 void loop() {
 
   lineFollower.followLine();
-  // lineFollower.debug();
 
 }
